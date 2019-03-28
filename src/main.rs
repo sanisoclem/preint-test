@@ -7,7 +7,10 @@ extern crate rocket_contrib;
 #[macro_use]
 extern crate serde_derive;
 
+mod db;
+
 use rocket_contrib::json::{Json, JsonValue};
+use rocket::http::Status;
 
 // Instace of app metadata (compile-time) for the current app
 pub const APP_META: AppMetadata<'static> = AppMetadata {
@@ -39,10 +42,11 @@ pub fn get_metadata() -> Json<AppMetadata<'static>> {
 }
 
 #[get("/health")]
-pub fn get_health() -> JsonValue {
-    json!({
-      "status": "Healthy"
-    })
+pub fn get_health(db_con: db::ColorsDbCon) -> Status {
+    match rocket_contrib::databases::redis::cmd("PING").query::<()>(&*db_con) {
+        Ok(_) => rocket::http::Status::new(200, "OK"),
+        Err(_) => Status::new(503, "PING FAIL")
+    }
 }
 
 #[catch(404)]
@@ -63,11 +67,11 @@ pub fn internal_error() -> JsonValue {
 
 fn rocket() -> rocket::Rocket {
     // TODO: set cors headers
-    // TODO: attach db
     // TODO: setup routes in separate module
     rocket::ignite()
         .mount("/", routes![get, get_metadata, get_health])
         .register(catchers![not_found, internal_error])
+        .attach(db::ColorsDbCon::fairing())
 }
 
 fn main() {
