@@ -1,28 +1,25 @@
 language: rust
 rust:
-  - nightly
-
+  - nightly-2019-03-23 # pin a rust nightly version because clippy is lagging behind
 cache: cargo
 
-script: cargo test
+services:
+  - docker
 
 stages:
   - name: test
     # test on PRs, cron, master or tags
     if: type != push OR branch = master OR tag IS present
+  - name: build
+    if: (type = push AND branch = master) OR tag IS present
 
-# Upload code coverage to codecov.io
-after_success: |
-  wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
-  tar xzf master.tar.gz &&
-  cd kcov-master &&
-  mkdir build &&
-  cd build &&
-  cmake .. &&
-  make &&
-  make install DESTDIR=../../kcov-build &&
-  cd ../.. &&
-  rm -rf kcov-master &&
-  for file in target/debug/calcver-*[^\.d]; do mkdir -p "target/cov/$(basename $file)"; ./kcov-build/usr/local/bin/kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done &&
-  bash <(curl -s https://codecov.io/bash) &&
-  echo "Uploaded code coverage"
+jobs:
+  include:
+    - stage: test
+      script: cargo test
+    - stage: build
+      before_script: docker run -v $PWD:/volume --rm -t clux/muslrust cargo build --release
+      script: |
+        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin &&
+        docker build . -t potatoengineering/rustaroo-api:$TRAVIS_BRANCH &&
+        docker push potatoengineering/rustaroo-api
