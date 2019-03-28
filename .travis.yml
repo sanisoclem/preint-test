@@ -1,9 +1,12 @@
 language: rust
 rust:
   - nightly
-
 cache: cargo
-
+services:
+  - redis-server
+env:
+  global:
+    - ROCKET_DATABASES={COLOROO_DB={url="redis://localhost:6379"}}
 script: cargo test
 
 stages:
