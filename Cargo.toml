@@ -1,0 +1,12 @@
+[package]
+name = "rustaroo-api"
+description = "pre-interview technical test"
+version = "0.1.0"
+publish = false
+
+[dependencies]
+rocket = "0.4.0"
+serde = "1.0"
+serde_json = "1.0"
+serde_derive = "1.0"
+rocket_contrib = "0.4.0"
