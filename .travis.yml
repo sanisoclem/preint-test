@@ -6,6 +6,11 @@ cache: cargo
 
 script: cargo test
 
+stages:
+  - name: test
+    # test on PRs, cron, master or tags
+    if: type != push OR branch = master OR tag IS present
+
 # Upload code coverage to codecov.io
 after_success: |
   wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
