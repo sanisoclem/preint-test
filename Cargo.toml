@@ -1,7 +1,11 @@
 [package]
 name = "rustaroo-api"
-description = "pre-interview technical test"
 version = "0.1.0"
+repository = 'https://github.com/sanisoclem/preint-test'
+documentation = 'https://github.com/sanisoclem/preint-test'
+authors = 'Jerahmeel Cosinas <me@jerahmeelcosinas.net>'
+description = "pre-interview technical test"
+license = 'Apache-2.0'
 publish = false
 
 [dependencies]
