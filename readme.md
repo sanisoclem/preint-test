@@ -1,5 +1,7 @@
 # Pre-Interview Test
 
+[![Build Status](https://travis-ci.com/sanisoclem/preint-test.svg?branch=master)](https://travis-ci.com/sanisoclem/preint-test)
+
 ## Overview
 
 This app is a REST API for the pre-interview test.
