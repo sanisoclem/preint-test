@@ -77,6 +77,9 @@ $ cargo test
  - Rocket requires nightly rust and that comes with a whole new set of caveats.
  - No client code generation, http documentation.
  - My experience in these technologies is limited so there may be best practices that I have not considered.
+ 
+ 
+ PS: Not really an issue with this repo, but this might be very different from the stack in use at myob. So I've written another [demo app](https://github.com/sanisoclem/iro-iro) using aws lambda and go. It's not really an answer to the excercise but is just for my learning and to show where I'm currently at with this technology stack.
 
 [rocket]: http://rocket.rs
 [logging]: https://github.com/SergioBenitez/Rocket/issues/21
