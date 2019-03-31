@@ -18,6 +18,8 @@ I went for a REST API because it fits the requirements well and is easy to consu
 
 For the language, I went for rust to explore what web api development is like in rust today. On a actual project, I would probably still consider using rust on a small scale, especially when there are opportunities to really make use of rust's type system, safety guarantees and/or performance.
 
+As for the health endpoint, I was debating over whether to return health data. This is common practice for us because we wrote internal apps, but I imagine internet facing ones didn't return any because it could give attackers insight. So I've opted to instead leave it out, since there is also nothing to show anway.
+
 ### CI
 
 Travis is setup to run tests and clippy (linter) on all PRs, cron, tags and pushes to `master` branch. Pushes to master and tags will trigger the job that builds the docker image and publishes it to [dockerhub](image).
