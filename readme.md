@@ -22,18 +22,18 @@ As for the health endpoint, I was debating over whether to return health data. T
 
 ### CI
 
-Travis is setup to run tests and clippy (linter) on all PRs, cron, tags and pushes to `master` branch. Pushes to master and tags will trigger the job that builds the docker image and publishes it to [dockerhub](image).
+Travis is setup to run tests and clippy (linter) on all PRs, cron, tags and pushes to `master` branch. Pushes to master and tags will trigger the job that builds the docker image and publishes it to [dockerhub][image].
 
 ## Getting started
 
 ### Requirements
  - git
- - [rustc/cargo](rustup) - when building locally/running tests
+ - [rustc/cargo][rustup] - when building locally/running tests
  - or Docker
 
 ### Run Locally
 
-[Cargo](rustup) is required to build the app locally or run tests.
+[Cargo][rustup] is required to build the app locally or run tests.
 
 ```bash
 $ git clone git@github.com:sanisoclem/preint-test.git
@@ -45,7 +45,7 @@ $ cargo run # run app
 
 ### Run in Docker
 
-This repository uses [clux/muslrust](muslrust) to build the binaries against musl instead of glibc. This simplifies the setup of the build environment and lets us use `alpine` or `scratch` as base. This app creates a <5MB image.
+This repository uses [clux/muslrust][muslrust] to simplify the build environment and lets us use `alpine` or `scratch` as base. This app creates a <5MB image.
 
 ```bash
 $ git clone git@github.com:sanisoclem/preint-test.git
@@ -77,7 +77,7 @@ $ cargo test
  - There is no throttling so someone can just flood you with requests.
  - No CORS header, so the API cannot be used by other sites (if intended to be used)
  - No metrics.
- - [Rocket](rocket) is pre `1.0`, so API is still unstable and there are some missing features (like OpenAPI, async, [TLS](TLS) and logging is a bit [lacking](logging)). In a real production api, I would probably put `nginx` or an API Gateway in front.
+ - [Rocket][rocket] is pre `1.0`, so API is still unstable and there are some missing features (like OpenAPI, async, [TLS][TLS] and logging is a bit [lacking][logging]). In a real production api, I would probably put `nginx` or an API Gateway in front.
  - Rocket requires nightly rust and that comes with a whole new set of caveats.
  - No client code generation, http documentation.
  - My experience in these technologies is limited so there may be best practices that I have not considered.
